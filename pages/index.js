@@ -19,17 +19,42 @@ function ProfileSideBar(propriedades){
       </Box>
   )
 }
+function ProfileRelationsBox(propriedades){
+  return(
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+      {propriedades.title}({propriedades.items.length})
+      </h2>
+    <ul>
+     </ul>
+
+    </ProfileRelationsBoxWrapper>
+  )
+}
 export default function Home() {
   const githubUser='IngridFCosta';
   const [comunidades,setComunidades]=React.useState([{
     id:'12272676716767636',
     title:'Eu odeio acordar cedo',
     image:'https://alurakut.vercel.app/capa-comunidade-01.jpg',
-    link:'https://www.pexels.com/pt-br/'  
+    link:'https://www.orkut.br.com/MainCommunity?cmm=10000'  
 }]);
   
   //console.log('Nosso teste',comunidades);
   const pessoasFavoritas=['juunegreiros','omariosouto','peas','rafaballerini','marcobrunodev','felipefialho']
+  //Consumindo a API do github para trazer os seguidores
+  const [seguidores, setSeguidores]=React.useState([]);
+  React.useEffect(function(){
+    fetch('https://api.github.com/users/IngridFCosta/followers')
+    .then(function(respostaDoServidor){
+    return respostaDoServidor.json();
+  })
+  .then(function(respostaCompleta){
+    setSeguidores(respostaCompleta);
+  })
+  },[])
+
+
   return( 
   <>
   <AlurakutMenu/>
@@ -40,7 +65,7 @@ export default function Home() {
     <div className="welcomeArea"  style={{gridArea:'welcomeArea'}}>
       <Box>
         <h1 className="title">
-          Bem vinda,{githubUser}
+          Bem vinda, {githubUser}
         </h1>
         <OrkutNostalgicIconSet></OrkutNostalgicIconSet>
       </Box>
@@ -89,7 +114,10 @@ export default function Home() {
       </Box>
     </div>
     <div className="profileRelationsArea" style={{gridArea:'profileRelationsArea'}}>
+    <ProfileRelationsBox title="Seguidores" items={seguidores}/>
+
     <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">Comunidades({comunidades.length})</h2>
     <ul>
      {comunidades.map((itemAtual)=>{
        return (
@@ -104,7 +132,6 @@ export default function Home() {
        )
      })}
      </ul>
-
     </ProfileRelationsBoxWrapper>
       <ProfileRelationsBoxWrapper>
         <h2 className="smallTitle">
