@@ -12,7 +12,8 @@ const GlobalStyle = createGlobalStyle`
 
 body {
     font-family:sans-serif;
-    background-color:#D9E6F6;
+    background-image:url('https://i.pinimg.com/originals/b1/7a/a2/b17aa2727e7bd44a10a25967648c1703.jpg');
+    background-size: 100%;
   }
   #__next{
     display:flex;
